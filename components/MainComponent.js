@@ -19,6 +19,7 @@ class Main extends Component {
     }
 
     render() {
+        return (
         <View style={{ flex: 1 }}>
             <Directory
                 campsites={this.state.campsites}
@@ -29,7 +30,7 @@ class Main extends Component {
                     campsite => campsite.id === this.state.selectedCampsite)[0]}
             />
         </View>
-    }
+    )};
 }
 
 export default Main;
