@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, FlatList } from 'react-native';
 import { Card, ListItem } from 'react-native-elements';
-import { PARTNERS } from '../shared/partners'
+import { connect } from 'react-redux';
+import { baseUrl } from '../shared/baseUrl';
+
+const mapStateToProps = state => {
+  return {
+      partners: state.partners
+  };
+};
 
 function Mission () {
   return (
@@ -17,24 +24,18 @@ function Mission () {
 }
 
 export class AboutComponent extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        partners: PARTNERS
-    };
-}
 
     static navigationOptions = {
         title: 'AboutUs'
     }
 
   render() {
-        const renderPartnersItem = ({ item }) => {
+        const renderPartner = ({ item }) => {
             return (
                 <ListItem
                     title={item.name}
                     subtitle={item.description}
-                    leftAvatar={{ source: require('./images/bootstrap-logo.png') }}
+                    leftAvatar={{source: {uri: baseUrl + item.image}}}
                 />
             );
         };
@@ -43,8 +44,8 @@ export class AboutComponent extends Component {
             <Mission/>
             <Card title='Community Partners'>
             <FlatList
-                data={this.state.partners}
-                renderItem={renderPartnersItem}
+                data={this.props.partners.partners}
+                renderItem={renderPartner}
                 keyExtractor={item => item.id.toString()}
             />
             </Card>
@@ -53,4 +54,4 @@ export class AboutComponent extends Component {
   }
 }
 
-export default AboutComponent
+export default connect(mapStateToProps)(About);
