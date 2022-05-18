@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Home from './HomeComponent';
 import Directory from './DirectoryComponent';
 import CampsiteInfo from './CampsiteInfoComponent';
+import About from './AboutComponent';
+import Contact from './ContactComponent'
 import Constants from 'expo-constants';
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -97,7 +99,7 @@ const AboutNavigator = createStackNavigator(
 
 const ContactNavigator = createStackNavigator(
     {
-        Contact: { screen: Contact }
+        Contact: { screen: Contact },
     },
     {
         defaultNavigationOptions: ({navigation}) => ({
