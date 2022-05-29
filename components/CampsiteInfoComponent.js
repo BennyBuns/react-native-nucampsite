@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     Text, View, ScrollView, FlatList,
     Modal, Button, StyleSheet,
-    Alert, PanResponder } from 'react-native';
+    Alert, PanResponder
+} from 'react-native';
 import { Card, Icon, Rating, Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -28,13 +29,15 @@ function RenderCampsite(props) {
 
     const view = React.createRef();
 
-    const recognizeDrag = ({dx}) => ( dx < -200) ? true : false;
+    const recognizeDrag = ({ dx }) => (dx < -200) ? true : false;
+
+    const recognizeComment = ({ dx }) => (dx > 200) ? true : false;
 
     const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
             view.current.rubberBand(1000)
-            .then(endState => console.log(endState.finished ? 'finished' : 'canceled'));
+                .then(endState => console.log(endState.finished ? 'finished' : 'canceled'));
         },
         onPanResponderEnd: (e, gestureState) => {
             console.log('pan responder end', gestureState);
@@ -56,6 +59,9 @@ function RenderCampsite(props) {
                     ],
                     { cancelable: false }
                 );
+            } else if (recognizeComment(gestureState)) {
+                console.log("pan responder end", gestureState);
+                props.onShowModal();
             }
             return true;
         }
@@ -63,12 +69,12 @@ function RenderCampsite(props) {
 
     if (campsite) {
         return (
-            <Animatable.View 
-            animation='fadeInDown' 
-            duration={2000} 
-            delay={1000}
-            ref={view}
-            {...panResponder.panHandlers}>
+            <Animatable.View
+                animation='fadeInDown'
+                duration={2000}
+                delay={1000}
+                ref={view}
+                {...panResponder.panHandlers}>
                 <Card
                     featuredTitle={campsite.name}
                     image={{ uri: baseUrl + campsite.image }}>
